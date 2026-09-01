@@ -1531,6 +1531,7 @@ void ImDrawList::AddRect(const ImVec2& p_min, const ImVec2& p_max, ImU32 col, fl
 
 void ImDrawList::AddRectFilled(const ImVec2& p_min, const ImVec2& p_max, ImU32 col, float rounding, ImDrawFlags flags)
 {
+    IMGUI_TRACY_ZONE;
     if ((col & IM_COL32_A_MASK) == 0)
         return;
     if (rounding < 0.5f || (flags & ImDrawFlags_RoundCornersMask_) == ImDrawFlags_RoundCornersNone)
@@ -2156,6 +2157,7 @@ void ImDrawListSplitter::ClearFreeMemory()
 
 void ImDrawListSplitter::Split(ImDrawList* draw_list, int channels_count)
 {
+    IMGUI_TRACY_ZONE;
     IM_UNUSED(draw_list);
     IM_ASSERT(_Current == 0 && _Count <= 1 && "Nested channel splitting is not supported. Please use separate instances of ImDrawListSplitter.");
     int old_channels_count = _Channels.Size;
@@ -2186,6 +2188,7 @@ void ImDrawListSplitter::Split(ImDrawList* draw_list, int channels_count)
 
 void ImDrawListSplitter::Merge(ImDrawList* draw_list)
 {
+    IMGUI_TRACY_ZONE;
     // Note that we never use or rely on _Channels.Size because it is merely a buffer that we never shrink back to 0 to keep all sub-buffers ready for use.
     if (_Count <= 1)
         return;
@@ -2257,6 +2260,7 @@ void ImDrawListSplitter::Merge(ImDrawList* draw_list)
 
 void ImDrawListSplitter::SetCurrentChannel(ImDrawList* draw_list, int idx)
 {
+    IMGUI_TRACY_ZONE;
     IM_ASSERT(idx >= 0 && idx < _Count);
     if (_Current == idx)
         return;
